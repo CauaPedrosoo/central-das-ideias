@@ -70,6 +70,8 @@ python scripts/sheets_sync.py bootstrap
 Isso cria e popula as abas:
 
 - `news_intake`
+- `context_enrichment`
+- `creative_outputs`
 - `content_ideas`
 - `lead_assets`
 
@@ -106,3 +108,10 @@ python scripts/sheets_sync.py upsert-runtime
 ```
 
 Esse fluxo evita que a automacao precise alterar os CSVs seed versionados no repositorio.
+
+## Novo fluxo de criativos
+
+Depois de aprovar noticias em `news_intake`, a automacao de criativos usa:
+
+- `context_enrichment` para armazenar contexto estruturado;
+- `creative_outputs` para armazenar briefs e rascunhos por formato.

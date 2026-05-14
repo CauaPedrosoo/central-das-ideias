@@ -21,6 +21,14 @@ WORKSHEETS = {
         "csv": ROOT / "data" / "news_intake.csv",
         "key": "article_url",
     },
+    "context_enrichment": {
+        "csv": ROOT / "data" / "context_enrichment.csv",
+        "key": "context_id",
+    },
+    "creative_outputs": {
+        "csv": ROOT / "data" / "creative_outputs.csv",
+        "key": "creative_id",
+    },
     "content_ideas": {
         "csv": ROOT / "data" / "content_ideas.csv",
         "key": "idea_id",
