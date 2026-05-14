@@ -17,6 +17,7 @@ Nesta fase, a automacao nao monta calendario editorial. Ela so pesquisa, filtra 
 
 - `data/content_ideas.csv`: seed inicial e fallback local do banco de ideias.
 - `data/lead_assets.csv`: seed inicial e fallback local dos lead magnets.
+- `docs/google-sheets-setup.md`: passo a passo para conectar a planilha.
 - `prompts/automation_brief.md`: regras editoriais da automacao.
 - `scripts/sheets_sync.py`: CLI para bootstrap, snapshot e upsert no Google Sheets.
 - `src/central_das_ideias/sheets_store.py`: integracao Python com Google Sheets.
@@ -77,4 +78,3 @@ python scripts/sheets_sync.py snapshot
 - `scheduled`
 - `published`
 - `discarded`
-
