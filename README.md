@@ -1,20 +1,22 @@
 # Central das Ideias
 
-Base para capturar, estruturar e sincronizar ideias de conteudo sobre inteligencia artificial.
+Base para capturar, estruturar e sincronizar noticias e ideias de conteudo sobre inteligencia artificial.
 
 ## Objetivo
 
 Este repositorio existe para:
 
+- manter uma fila de noticias relevantes sobre IA;
 - manter um banco de ideias sobre IA aplicada;
 - registrar lead magnets e CTAs;
 - sincronizar a base com Google Sheets;
-- permitir que automacoes do Codex rodem em nuvem sem depender do app aberto.
+- permitir que automacoes locais do Codex atualizem o banco na nuvem.
 
-Nesta fase, a automacao nao monta calendario editorial. Ela so pesquisa, filtra e guarda ideias boas.
+Nesta fase, a automacao nao monta calendario editorial. Ela pesquisa, filtra e guarda as noticias mais importantes sem repetir fatos.
 
 ## Estrutura
 
+- `data/news_intake.csv`: seed inicial e fallback local da fila de noticias.
 - `data/content_ideas.csv`: seed inicial e fallback local do banco de ideias.
 - `data/lead_assets.csv`: seed inicial e fallback local dos lead magnets.
 - `docs/google-sheets-setup.md`: passo a passo para conectar a planilha.
@@ -24,6 +26,7 @@ Nesta fase, a automacao nao monta calendario editorial. Ela so pesquisa, filtra 
 
 ## Modelo de abas no Google Sheets
 
+- `news_intake`
 - `content_ideas`
 - `lead_assets`
 
@@ -55,19 +58,13 @@ pip install -r requirements.txt
 python scripts/sheets_sync.py bootstrap
 ```
 
-6. Se quiser baixar um snapshot atual da planilha para inspeção local:
+6. Para baixar um snapshot atual da planilha para inspecao local:
 
 ```bash
 python scripts/sheets_sync.py snapshot
 ```
 
-7. Para o fluxo de automacao em nuvem, use:
-
-```bash
-python scripts/sheets_sync.py snapshot
-```
-
-Edite apenas os arquivos em `data/runtime/` e depois sincronize de volta:
+7. Para o fluxo da automacao, edite apenas os arquivos em `data/runtime/` e depois sincronize de volta:
 
 ```bash
 python scripts/sheets_sync.py upsert-runtime
@@ -76,19 +73,43 @@ python scripts/sheets_sync.py upsert-runtime
 ## Como a automacao deve operar
 
 1. Ler `prompts/automation_brief.md`.
-2. Consultar o estado atual do banco no Google Sheets.
-3. Pesquisar temas recentes e ideias evergreen.
-4. Baixar snapshot para `data/runtime/`.
-5. Adicionar ate 5 ideias novas, sem duplicar angulos, editando os CSVs de runtime.
-6. Se surgir um novo lead magnet valido, adicionar em `lead_assets` de runtime.
-7. Executar `upsert-runtime` para devolver as mudancas ao Sheets.
-6. Nao criar datas de postagem nesta fase.
+2. Rodar `python scripts/sheets_sync.py snapshot`.
+3. Consultar as paginas:
+   - `https://exame.com/inteligencia-artificial/`
+   - `https://www.cnnbrasil.com.br/tudo-sobre/inteligencia-artificial/`
+   - `https://www.infomoney.com.br/tudo-sobre/inteligencia-artificial/`
+4. Atualizar `data/runtime/news_intake.csv` com exatamente 10 noticias relevantes por rodada.
+5. Nao repetir noticia ja capturada. Dedupe por `article_url`, manchete e fato principal.
+6. Opcionalmente atualizar `content_ideas` e `lead_assets` quando houver um gancho realmente forte.
+7. Rodar `python scripts/sheets_sync.py upsert-runtime`.
+8. Nao criar datas de postagem nesta fase.
+
+## Aba de noticias
+
+`news_intake` guarda o intake bruto da automacao. Campos:
+
+- `news_id`
+- `captured_at`
+- `source_name`
+- `source_index_url`
+- `article_url`
+- `headline`
+- `published_label`
+- `category`
+- `importance_score`
+- `importance_reason`
+- `summary`
+- `content_angle`
+- `audience_segment`
+- `status`
+- `dedupe_key`
+- `notes`
 
 ## Status sugeridos
 
 - `captured`
+- `reviewed`
 - `approved`
 - `drafting`
-- `scheduled`
 - `published`
 - `discarded`

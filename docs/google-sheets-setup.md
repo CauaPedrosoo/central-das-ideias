@@ -69,6 +69,7 @@ python scripts/sheets_sync.py bootstrap
 
 Isso cria e popula as abas:
 
+- `news_intake`
 - `content_ideas`
 - `lead_assets`
 

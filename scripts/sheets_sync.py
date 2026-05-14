@@ -17,6 +17,10 @@ from central_das_ideias.sheets_store import SheetsStore
 
 
 WORKSHEETS = {
+    "news_intake": {
+        "csv": ROOT / "data" / "news_intake.csv",
+        "key": "article_url",
+    },
     "content_ideas": {
         "csv": ROOT / "data" / "content_ideas.csv",
         "key": "idea_id",
