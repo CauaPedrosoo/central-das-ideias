@@ -74,15 +74,16 @@ python scripts/sheets_sync.py upsert-runtime
 
 1. Ler `prompts/automation_brief.md`.
 2. Rodar `python scripts/sheets_sync.py snapshot`.
-3. Consultar as paginas:
+3. Consultar obrigatoriamente as paginas:
    - `https://exame.com/inteligencia-artificial/`
    - `https://www.cnnbrasil.com.br/tudo-sobre/inteligencia-artificial/`
    - `https://www.infomoney.com.br/tudo-sobre/inteligencia-artificial/`
-4. Atualizar `data/runtime/news_intake.csv` com exatamente 10 noticias relevantes por rodada.
-5. Nao repetir noticia ja capturada. Dedupe por `article_url`, manchete e fato principal.
-6. Opcionalmente atualizar `content_ideas` e `lead_assets` quando houver um gancho realmente forte.
-7. Rodar `python scripts/sheets_sync.py upsert-runtime`.
-8. Nao criar datas de postagem nesta fase.
+4. Consultar tambem fontes complementares relevantes de IA, incluindo blogs oficiais de empresas e publicacoes fortes do setor.
+5. Atualizar `data/runtime/news_intake.csv` com exatamente 10 noticias relevantes por rodada, escolhidas do conjunto total de fontes.
+6. Nao repetir noticia ja capturada. Dedupe por `article_url`, manchete e fato principal.
+7. Opcionalmente atualizar `content_ideas` e `lead_assets` quando houver um gancho realmente forte.
+8. Rodar `python scripts/sheets_sync.py upsert-runtime`.
+9. Nao criar datas de postagem nesta fase.
 
 ## Aba de noticias
 
