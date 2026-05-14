@@ -34,6 +34,10 @@ def parse_args() -> argparse.Namespace:
 
     subparsers.add_parser("bootstrap", help="Create worksheets and replace them with seed CSV data.")
     subparsers.add_parser("snapshot", help="Download current worksheets to data/runtime.")
+    subparsers.add_parser(
+        "upsert-runtime",
+        help="Upsert CSVs from data/runtime into matching worksheets.",
+    )
 
     upsert = subparsers.add_parser("upsert", help="Upsert all local CSVs into matching worksheets.")
     upsert.add_argument(
@@ -62,6 +66,10 @@ def main() -> None:
 
     if args.command == "upsert":
         upsert(store, args.worksheet)
+        return
+
+    if args.command == "upsert-runtime":
+        upsert_runtime(store)
         return
 
     raise RuntimeError(f"Comando nao suportado: {args.command}")
@@ -93,6 +101,19 @@ def upsert(store: SheetsStore, worksheet: str | None) -> None:
         store.ensure_worksheet(name, headers)
         store.upsert_csv(name, config["csv"], config["key"])
         print(f"[upsert] {name} sincronizada com {config['csv'].name}")
+
+
+def upsert_runtime(store: SheetsStore) -> None:
+    runtime_dir = ROOT / "data" / "runtime"
+    for name, config in WORKSHEETS.items():
+        runtime_csv = runtime_dir / f"{name}.csv"
+        if not runtime_csv.exists():
+            print(f"[upsert-runtime] ignorando {name}: {runtime_csv} nao existe")
+            continue
+        headers = _read_headers(config["csv"])
+        store.ensure_worksheet(name, headers)
+        store.upsert_csv(name, runtime_csv, config["key"])
+        print(f"[upsert-runtime] {name} sincronizada com {runtime_csv.name}")
 
 
 def _read_headers(csv_path: Path) -> list[str]:

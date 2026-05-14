@@ -87,3 +87,21 @@ Para sincronizar os CSVs locais com a planilha sem apagar a base inteira:
 ```bash
 python scripts/sheets_sync.py upsert
 ```
+
+## Fluxo recomendado para automacao cloud
+
+1. Baixar o estado atual da planilha:
+
+```bash
+python scripts/sheets_sync.py snapshot
+```
+
+2. Editar apenas os arquivos em `data/runtime/`.
+
+3. Enviar as mudancas de volta:
+
+```bash
+python scripts/sheets_sync.py upsert-runtime
+```
+
+Esse fluxo evita que a automacao precise alterar os CSVs seed versionados no repositorio.

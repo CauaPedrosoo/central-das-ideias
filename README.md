@@ -61,13 +61,27 @@ python scripts/sheets_sync.py bootstrap
 python scripts/sheets_sync.py snapshot
 ```
 
+7. Para o fluxo de automacao em nuvem, use:
+
+```bash
+python scripts/sheets_sync.py snapshot
+```
+
+Edite apenas os arquivos em `data/runtime/` e depois sincronize de volta:
+
+```bash
+python scripts/sheets_sync.py upsert-runtime
+```
+
 ## Como a automacao deve operar
 
 1. Ler `prompts/automation_brief.md`.
 2. Consultar o estado atual do banco no Google Sheets.
 3. Pesquisar temas recentes e ideias evergreen.
-4. Adicionar ate 5 ideias novas, sem duplicar angulos.
-5. Se surgir um novo lead magnet valido, adicionar em `lead_assets`.
+4. Baixar snapshot para `data/runtime/`.
+5. Adicionar ate 5 ideias novas, sem duplicar angulos, editando os CSVs de runtime.
+6. Se surgir um novo lead magnet valido, adicionar em `lead_assets` de runtime.
+7. Executar `upsert-runtime` para devolver as mudancas ao Sheets.
 6. Nao criar datas de postagem nesta fase.
 
 ## Status sugeridos
