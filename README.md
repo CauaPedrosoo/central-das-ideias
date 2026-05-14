@@ -94,12 +94,12 @@ python scripts/sheets_sync.py upsert-runtime
 
 ## Fluxo 2: Contexto e Criativos
 
-1. Marque em `news_intake` as noticias que quer transformar em conteudo com `status=approved`.
-2. A automacao de criativos le `prompts/creative_automation_brief.md`.
-3. Ela roda `python scripts/sheets_sync.py snapshot`.
-4. Para cada noticia `approved` sem contexto, ela cria uma linha em `context_enrichment`.
-5. Para cada contexto `ready_for_creative`, ela cria ou atualiza linhas em `creative_outputs`.
-6. Ela tambem pode registrar ideias derivadas em `content_ideas` e CTAs ou iscas em `lead_assets`.
+1. A automacao de criativos le `prompts/creative_automation_brief.md`.
+2. Ela roda `python scripts/sheets_sync.py snapshot`.
+3. Para cada noticia forte em `news_intake` com `status=captured` ou `status=reviewed`, ela cria contexto automaticamente em `context_enrichment`.
+4. Ela tambem registra ideias derivadas em `content_ideas` quando houver gancho claro.
+5. Para cada contexto com `status=ready_for_creative` ou para noticias explicitamente `approved`, ela cria ou atualiza linhas em `creative_outputs`.
+6. Ela pode registrar CTAs ou iscas novas em `lead_assets`.
 7. Por fim, roda `python scripts/sheets_sync.py upsert-runtime`.
 
 ## Aba de noticias
@@ -176,3 +176,9 @@ python scripts/sheets_sync.py upsert-runtime
 - `drafting`
 - `published`
 - `discarded`
+
+## Regra pratica
+
+- `news_intake` alimenta a base automaticamente.
+- noticias com alta prioridade podem virar contexto e ideia sem aprovacao manual.
+- aprovacao manual continua sendo o gatilho ideal para gerar criativos finais.

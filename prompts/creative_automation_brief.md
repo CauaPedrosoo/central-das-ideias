@@ -14,11 +14,14 @@ Transformar noticias aprovadas em:
 
 ## Regra de entrada
 
-So processe noticias em `news_intake` com `status=approved`.
+Processe duas faixas:
+
+- noticias em `news_intake` com `status=captured` ou `status=reviewed` e alta prioridade para alimentar a base;
+- noticias em `news_intake` com `status=approved` para gerar criativos completos.
 
 ## Etapa 1: Contexto
 
-Para cada noticia aprovada sem linha correspondente em `context_enrichment`, crie um pacote com:
+Para cada noticia elegivel sem linha correspondente em `context_enrichment`, crie um pacote com:
 
 - `main_claim`
 - `key_facts_json`
@@ -34,9 +37,11 @@ Para cada noticia aprovada sem linha correspondente em `context_enrichment`, cri
 
 O objetivo e transformar a noticia em contexto reutilizavel, nao so em resumo.
 
+Quando a noticia ainda nao estiver `approved`, use essa etapa para alimentar a base e marque o contexto como `context_ready`.
+
 ## Etapa 2: Criativos
 
-Para cada contexto com `status=ready_for_creative` ou equivalente, gere pelo menos:
+Para cada contexto com `status=ready_for_creative` ou para noticias explicitamente `approved`, gere pelo menos:
 
 - 1 carrossel para Instagram;
 - 1 roteiro de Reels;
@@ -60,6 +65,14 @@ Cada linha de `creative_outputs` deve conter:
 - manter fidelidade aos fatos;
 - evitar repetir o mesmo angulo entre formatos;
 - priorizar ganchos claros e acionaveis.
+
+## Regra de alimentacao da base
+
+- se a noticia tiver `importance_score >= 9`, gere contexto automaticamente;
+- se houver gancho claro, adicione ou atualize uma linha em `content_ideas`;
+- se houver um CTA organico forte, sugira ou atualize `lead_assets`;
+- nao espere aprovacao manual para enriquecer a base;
+- mantenha a geracao de criativos completos preferencialmente para noticias `approved`.
 
 ## Regra de sincronizacao
 
