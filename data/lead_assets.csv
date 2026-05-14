@@ -1,0 +1,5 @@
+asset_id,name,keyword,format,topic,status,delivery_channel,notes
+ASSET-001,Playbook de prompts,PROMPT,pdf,prompts,active,dm,"Oferta usada no post de 13/05/2026"
+ASSET-002,Checklist do prompt perfeito,CHECKLIST,pdf,prompts,planned,dm,"Boa sequencia para captar comentarios em posts educativos"
+ASSET-003,Pack com 20 prompts para iniciantes,PROMPTS,notion_or_pdf,getting_started,planned,dm,"Pode virar principal isca para a serie IA para iniciantes"
+

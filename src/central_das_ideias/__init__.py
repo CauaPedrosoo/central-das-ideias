@@ -1,0 +1,2 @@
+"""Central das Ideias package."""
+
